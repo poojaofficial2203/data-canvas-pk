@@ -1,4 +1,4 @@
-"""Universal Data Converter - Convert any raw data format to PowerPoint"""
+"""Universal Data Converter - Convert any raw data format to PowerPoint with performance optimization and structured summarization"""
 
 from pptx import Presentation
 from pptx.util import Inches, Pt
@@ -11,27 +11,38 @@ from datetime import datetime
 from .utils import parse_raw_data, get_numeric_columns, get_categorical_columns
 from .analyzers import DataAnalyzer
 from .generators import ChartGenerator
+from .performance import PerformanceOptimizer, ChunkProcessor, CacheManager
+from .summarizer import DataSummarizer, StructuredReportGenerator, PerformanceSummary
 import pandas as pd
+import time
 
 
 class UniversalDataToPPT:
-    """Convert any raw data format (text, CSV, JSON, Excel, etc.) to PowerPoint"""
+    """Convert any raw data format (text, CSV, JSON, Excel, etc.) to PowerPoint with performance optimization"""
     
-    def __init__(self, title="Data Analysis Report", auto_format=True):
+    def __init__(self, title="Data Analysis Report", auto_format=True, enable_optimization=True):
         """
         Initialize the universal converter.
         
         Args:
             title (str): Presentation title
             auto_format (bool): Automatically detect and format data
+            enable_optimization (bool): Enable performance optimization for large datasets
         """
         self.title = title
         self.prs = None
         self.chart_generator = ChartGenerator()
         self.auto_format = auto_format
         self.data_format = None
+        self.enable_optimization = enable_optimization
+        self.performance_optimizer = PerformanceOptimizer()
+        self.cache_manager = CacheManager()
+        self.chunk_processor = ChunkProcessor()
+        self.report_generator = StructuredReportGenerator()
+        self.conversion_start_time = None
+        self.structured_report = None
     
-    def convert_text(self, raw_text, output_file, delimiter=None):
+    def convert_text(self, raw_text, output_file, delimiter=None, generate_report=False, report_file=None):
         """
         Convert raw text data to PowerPoint.
         Supports: CSV, TSV, pipe-delimited, semicolon-delimited, space-separated
@@ -40,18 +51,18 @@ class UniversalDataToPPT:
             raw_text (str): Raw text data
             output_file (str): Path to output PPT file
             delimiter (str): Data delimiter (auto-detect if None)
+            generate_report (bool): Generate structured JSON report
+            report_file (str): Path to save JSON report
         """
         try:
+            self.conversion_start_time = time.time()
             df = parse_raw_data(raw_text, delimiter)
-            self._create_presentation(df)
-            self.prs.save(output_file)
-            print(f"✓ Presentation created from raw text: {output_file}")
-            return True
+            return self._convert_dataframe(df, output_file, generate_report, report_file)
         except Exception as e:
             print(f"✗ Error converting text data: {e}")
             return False
     
-    def convert_file(self, input_file, output_file):
+    def convert_file(self, input_file, output_file, generate_report=False, report_file=None):
         """
         Convert data file to PowerPoint.
         Supports: CSV, Excel, JSON, TXT, TSV, DAT
@@ -59,8 +70,11 @@ class UniversalDataToPPT:
         Args:
             input_file (str): Path to input file
             output_file (str): Path to output PPT file
+            generate_report (bool): Generate structured JSON report
+            report_file (str): Path to save JSON report
         """
         try:
+            self.conversion_start_time = time.time()
             file_path = Path(input_file)
             
             if not file_path.exists():
@@ -83,77 +97,121 @@ class UniversalDataToPPT:
                 df = parse_raw_data(raw_text)
                 self.data_format = 'Text File'
             else:
-                # Try to read as text with auto-detection
                 with open(input_file, 'r', encoding='utf-8') as f:
                     raw_text = f.read()
                 df = parse_raw_data(raw_text)
                 self.data_format = 'Text File'
             
-            self._create_presentation(df)
-            self.prs.save(output_file)
-            print(f"✓ Presentation created from {self.data_format}: {output_file}")
-            return True
+            return self._convert_dataframe(df, output_file, generate_report, report_file)
             
         except Exception as e:
             print(f"✗ Error converting file: {e}")
             return False
     
-    def convert_dict(self, data_dict, output_file):
+    def convert_dict(self, data_dict, output_file, generate_report=False, report_file=None):
         """
         Convert Python dictionary to PowerPoint.
         
         Args:
             data_dict (dict): Dictionary with lists or similar structure
             output_file (str): Path to output PPT file
+            generate_report (bool): Generate structured JSON report
+            report_file (str): Path to save JSON report
         """
         try:
+            self.conversion_start_time = time.time()
             df = pd.DataFrame(data_dict)
             self.data_format = 'Python Dictionary'
-            self._create_presentation(df)
-            self.prs.save(output_file)
-            print(f"✓ Presentation created from dictionary: {output_file}")
-            return True
+            return self._convert_dataframe(df, output_file, generate_report, report_file)
         except Exception as e:
             print(f"✗ Error converting dictionary: {e}")
             return False
     
-    def convert_json_string(self, json_string, output_file):
+    def convert_json_string(self, json_string, output_file, generate_report=False, report_file=None):
         """
         Convert JSON string to PowerPoint.
         
         Args:
             json_string (str): JSON formatted string
             output_file (str): Path to output PPT file
+            generate_report (bool): Generate structured JSON report
+            report_file (str): Path to save JSON report
         """
         try:
+            self.conversion_start_time = time.time()
             data = json.loads(json_string)
             df = pd.DataFrame(data)
             self.data_format = 'JSON String'
-            self._create_presentation(df)
-            self.prs.save(output_file)
-            print(f"✓ Presentation created from JSON string: {output_file}")
-            return True
+            return self._convert_dataframe(df, output_file, generate_report, report_file)
         except Exception as e:
             print(f"✗ Error converting JSON string: {e}")
             return False
     
-    def convert_dataframe(self, df, output_file):
+    def convert_dataframe(self, df, output_file, generate_report=False, report_file=None):
         """
         Convert pandas DataFrame to PowerPoint.
         
         Args:
             df (pd.DataFrame): Input dataframe
             output_file (str): Path to output PPT file
+            generate_report (bool): Generate structured JSON report
+            report_file (str): Path to save JSON report
         """
         try:
+            self.conversion_start_time = time.time()
             self.data_format = 'Pandas DataFrame'
-            self._create_presentation(df)
-            self.prs.save(output_file)
-            print(f"✓ Presentation created from DataFrame: {output_file}")
-            return True
+            return self._convert_dataframe(df, output_file, generate_report, report_file)
         except Exception as e:
             print(f"✗ Error converting DataFrame: {e}")
             return False
+    
+    def _convert_dataframe(self, df, output_file, generate_report=False, report_file=None):
+        """Internal method to convert dataframe"""
+        # Generate structured report if requested
+        if generate_report:
+            self.structured_report = self.report_generator.generate_report(df, self.title)
+            if report_file:
+                self.report_generator.export_report(report_file)
+                print(f"✓ Report exported to: {report_file}")
+        
+        # Optimize dataframe if enabled
+        if self.enable_optimization:
+            df = self.performance_optimizer.optimize_dataframe(df)
+        
+        # Create presentation
+        self._create_presentation(df)
+        self.prs.save(output_file)
+        
+        # Calculate and log performance metrics
+        elapsed_time = time.time() - self.conversion_start_time
+        perf_summary = PerformanceSummary.summarize_conversion(
+            input_size_mb=df.memory_usage(deep=True).sum() / 1024 / 1024,
+            num_rows=len(df),
+            num_columns=len(df.columns),
+            processing_time_sec=elapsed_time,
+            charts_generated=self._count_charts_generated(df)
+        )
+        
+        print(f"✓ Presentation created from {self.data_format}: {output_file}")
+        print(f"  Processing time: {perf_summary['processing_metrics']['processing_time_seconds']}s")
+        print(f"  Rows/sec: {perf_summary['processing_metrics']['rows_processed_per_second']}")
+        
+        return True
+    
+    def _count_charts_generated(self, df):
+        """Count number of charts that will be generated"""
+        numeric_cols = get_numeric_columns(df)
+        categorical_cols = get_categorical_columns(df)
+        count = 0
+        
+        if numeric_cols:
+            count += 1  # histogram
+        if categorical_cols:
+            count += 1  # bar chart
+        if len(numeric_cols) >= 2:
+            count += 1  # scatter plot
+        
+        return count
     
     def _create_presentation(self, df):
         """Create complete PowerPoint presentation"""
@@ -360,6 +418,12 @@ class UniversalDataToPPT:
         numeric_cols = get_numeric_columns(df)
         categorical_cols = get_categorical_columns(df)
         
+        # Downsample if needed for visualization
+        if self.enable_optimization:
+            viz_df = self.performance_optimizer.downsample_for_visualization(df)
+        else:
+            viz_df = df
+        
         if numeric_cols:
             slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
             title = slide.shapes.title
@@ -367,7 +431,7 @@ class UniversalDataToPPT:
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
             chart_img = self.chart_generator.histogram(
-                df[numeric_cols[0]],
+                viz_df[numeric_cols[0]],
                 title="Histogram",
                 bins=20
             )
@@ -380,7 +444,7 @@ class UniversalDataToPPT:
             title.text = f"🏷️  Top Values: {categorical_cols[0]}"
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
-            top_vals = df[categorical_cols[0]].value_counts().head(10)
+            top_vals = viz_df[categorical_cols[0]].value_counts().head(10)
             chart_img = self.chart_generator.bar_chart(
                 top_vals,
                 title="Bar Chart"
@@ -395,7 +459,7 @@ class UniversalDataToPPT:
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
             chart_img = self.chart_generator.scatter_plot(
-                df,
+                viz_df,
                 numeric_cols[0],
                 numeric_cols[1],
                 title="Scatter Plot"
@@ -410,3 +474,11 @@ class UniversalDataToPPT:
         img_bytes.seek(0)
         
         slide.shapes.add_picture(img_bytes, left, top, width=Inches(8))
+    
+    def get_performance_metrics(self):
+        """Get performance metrics from conversion"""
+        return self.performance_optimizer.get_performance_summary()
+    
+    def get_structured_report(self):
+        """Get structured report from conversion"""
+        return self.structured_report
