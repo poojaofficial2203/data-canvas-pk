@@ -175,22 +175,22 @@ class UniversalDataToPPT:
                 print(f"✓ Report exported to: {report_file}")
         
         # Optimize dataframe if enabled
-        if self.enable_optimization:
-            df = self.performance_optimizer.optimize_dataframe(df)
+       # if self.enable_optimization:
+          #  df = self.performance_optimizer.optimize_dataframe(df)
         
         # Create presentation
         self._create_presentation(df)
         self.prs.save(output_file)
         
         # Calculate and log performance metrics
-        elapsed_time = time.time() - self.conversion_start_time
-        perf_summary = PerformanceSummary.summarize_conversion(
-            input_size_mb=df.memory_usage(deep=True).sum() / 1024 / 1024,
-            num_rows=len(df),
-            num_columns=len(df.columns),
-            processing_time_sec=elapsed_time,
-            charts_generated=self._count_charts_generated(df)
-        )
+       # elapsed_time = time.time() - self.conversion_start_time
+      #  perf_summary = PerformanceSummary.summarize_conversion(
+          #  input_size_mb=df.memory_usage(deep=True).sum() / 1024 / 1024,
+         #   num_rows=len(df),
+         #   num_columns=len(df.columns),
+          #  processing_time_sec=elapsed_time,
+          #  charts_generated=self._count_charts_generated(df)
+     #   )
         
         print(f"✓ Presentation created from {self.data_format}: {output_file}")
         print(f"  Processing time: {perf_summary['processing_metrics']['processing_time_seconds']}s")
@@ -419,10 +419,10 @@ class UniversalDataToPPT:
         categorical_cols = get_categorical_columns(df)
         
         # Downsample if needed for visualization
-        if self.enable_optimization:
-            viz_df = self.performance_optimizer.downsample_for_visualization(df)
-        else:
-            viz_df = df
+      #  if self.enable_optimization:
+       #     viz_df = self.performance_optimizer.downsample_for_visualization(df)
+     #   else:
+      #      viz_df = df
         
         if numeric_cols:
             slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
