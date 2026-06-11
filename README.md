@@ -21,7 +21,7 @@ cd data-canvas-pk
 pip install -r requirements.txt
 ```
 
-## 💡 Quick Examples
+## Examples
 
 ### Example 1: Raw CSV Text
 ```python
