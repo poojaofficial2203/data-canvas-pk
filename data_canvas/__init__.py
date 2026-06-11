@@ -1,11 +1,11 @@
 """Data Canvas - Universal Data to PowerPoint Converter Package"""
 
 from .universal_converter import UniversalDataToPPT
-from .performance import PerformanceOptimizer, ChunkProcessor, CacheManager
-from .summarizer import DataSummarizer, StructuredReportGenerator, PerformanceSummary, DataSummary
+#from .performance import PerformanceOptimizer, ChunkProcessor, CacheManager
+#from .summarizer import DataSummarizer, StructuredReportGenerator, PerformanceSummary, DataSummary
 from .analyzers import DataAnalyzer
 from .generators import ChartGenerator
-from .utils import (
+#from .utils import (
     parse_raw_data,
     load_data,
     get_numeric_columns,
