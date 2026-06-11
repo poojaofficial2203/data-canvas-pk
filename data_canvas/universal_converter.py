@@ -38,7 +38,7 @@ class UniversalDataToPPT:
        # self.performance_optimizer = PerformanceOptimizer()
         #self.cache_manager = CacheManager()
        # self.chunk_processor = ChunkProcessor()
-        self.report_generator = StructuredReportGenerator()
+       # self.report_generator = StructuredReportGenerator()
         self.conversion_start_time = None
         self.structured_report = None
     
