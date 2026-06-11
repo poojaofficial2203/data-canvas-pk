@@ -11,8 +11,8 @@ from datetime import datetime
 from .utils import parse_raw_data, get_numeric_columns, get_categorical_columns
 from .analyzers import DataAnalyzer
 from .generators import ChartGenerator
-from .performance import PerformanceOptimizer, ChunkProcessor, CacheManager
-from .summarizer import DataSummarizer, StructuredReportGenerator, PerformanceSummary
+#from .performance import PerformanceOptimizer, ChunkProcessor, CacheManager
+#from .summarizer import DataSummarizer, StructuredReportGenerator, PerformanceSummary
 import pandas as pd
 import time
 
@@ -475,9 +475,9 @@ class UniversalDataToPPT:
         
         slide.shapes.add_picture(img_bytes, left, top, width=Inches(8))
     
-    def get_performance_metrics(self):
-        """Get performance metrics from conversion"""
-        return self.performance_optimizer.get_performance_summary()
+    #def get_performance_metrics(self):
+        #"""Get performance metrics from conversion"""
+        #return self.performance_optimizer.get_performance_summary()
     
     def get_structured_report(self):
         """Get structured report from conversion"""
