@@ -469,11 +469,11 @@ class UniversalDataToPPT:
         )
 
         textbox.text_frame.text = (
-        "• Monitor key business metrics regularly\n"
-        "• Investigate unusual trends and outliers\n"
-        "• Focus on improving high-performing areas\n"
-        "• Use data-driven decision making"
-         )
+         "• Monitor key business metrics regularly\n"
+         "• Investigate unusual trends and outliers\n"
+         "• Focus on improving high-performing areas\n"
+         "• Use data-driven decision making" )
+        
     
     def _add_visualization_slides(self, df):
         """Add chart visualization slides"""
