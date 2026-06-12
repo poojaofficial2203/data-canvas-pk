@@ -420,7 +420,7 @@ class UniversalDataToPPT:
                 p.space_before = Pt(10)
                 p.level = 0
 
-    def _split_text(self, text, size =800):
+    def _split_text(self, text, size =500):
         return [text[i:i+size] for i in range (0, len (text),size)]
         
     def _add_ai_insights_slide(self, insights):
@@ -428,9 +428,14 @@ class UniversalDataToPPT:
         title = slide.shapes.title
         title.text = "AI Insights"
         
-        textbox = slide.shapes.add_textbox( Inches (0.5), Inches (1.5), Inches (9.2), Inches (5)) 
-        textbox.text_frame.text = insights
-        textbox.text_frame.paragraphs[0].font.size = Pt(10)
+        textbox = slide.shapes.add_textbox( Inches (0.2), Inches (1.2), Inches (9.6), Inches (5.8)) 
+        text_frame = textbox.text_frame
+        text_frame.word_wrap = True 
+        insights = insights.replace("###","")
+        insights = insights.replace("**","")
+        text_frame.text = insights
+        for paragraph in text_frame.paragraphs: 
+            paragraph.font.size = Pt(9)
     
     def _add_visualization_slides(self, df):
         """Add chart visualization slides"""
