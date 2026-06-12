@@ -455,28 +455,20 @@ class UniversalDataToPPT:
         for paragraph in text_frame.paragraphs: 
             paragraph.font.size = Pt(8)
 
-   def _add_recommendations_slide(self):
-    slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
+    def _add_recommendations_slide(self):
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
 
-    title = slide.shapes.title
-    title.text = "Recommendations"
+        title = slide.shapes.title
+        title.text = "Recommendations"
 
-    textbox = slide.shapes.add_textbox(
-        Inches(0.5),
-        Inches(1.5),
-        Inches(8),
-        Inches(3)
+        textbox = slide.shapes.add_textbox(
+          Inches(0.5),
+          Inches(1.5),
+          Inches(8),
+          Inches(3)
     )
 
-    textbox.text_frame.text = """
-• Monitor key business metrics regularly
-
-• Investigate unusual trends and outliers
-
-• Focus on improving high-performing areas
-
-• Use data-driven decision making
-"""
+     textbox.text_frame.text = """• Monitor key business metrics regularly• Investigate unusual trends and outliers• Focus on improving high-performing areas• Use data-driven decision making"""
 
     
     
