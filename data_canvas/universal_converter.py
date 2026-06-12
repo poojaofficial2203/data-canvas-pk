@@ -415,7 +415,7 @@ class UniversalDataToPPT:
                 p.level = 0
 
     def _add_ai_insights_slide(self):
-        slide = self.prs.slides.add_slides(self.prs.slide_layouts[5])
+        slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
         title = slide.shapes.title
         text.text = "AI Insights"
         
