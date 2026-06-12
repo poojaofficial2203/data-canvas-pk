@@ -224,7 +224,10 @@ class UniversalDataToPPT:
         self._add_data_preview_slide(df)
         self._add_data_summary_slide(df)
         self._add_statistics_slides(df)
-        self._add_ai_insights_slide()
+        from data_canvas.ai_insights import generate_insights
+        summary_text = str(df.describe())
+        insights = generate_insights(summary_text)
+        self._add_ai_insights_slide(insights)
         self._add_visualization_slides(df)
     
     def _add_title_slide(self):
@@ -414,13 +417,13 @@ class UniversalDataToPPT:
                 p.space_before = Pt(10)
                 p.level = 0
 
-    def _add_ai_insights_slide(self):
+    def _add_ai_insights_slide(self, insights):
         slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
         title = slide.shapes.title
         title.text = "AI Insights"
         
         textbox = slide.shapes.add_textbox( Inches (0.5), Inches (1.5), Inches (8), Inches (2)) 
-        textbox.text_frame.text = " This is a test AI summary"
+        textbox.text_frame.text = insights
     
     def _add_visualization_slides(self, df):
         """Add chart visualization slides"""
