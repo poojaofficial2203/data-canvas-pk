@@ -419,7 +419,7 @@ class UniversalDataToPPT:
         title = slide.shapes.title
         text.text = "AI Insights"
         
-        slide.shapes.shapes.add_textbox( Inches (0.5), Inches (1.5), Inches (8), Inches (2)).text = " This is a test AI summary"
+        slide.shapes.add_textbox( Inches (0.5), Inches (1.5), Inches (8), Inches (2)).text = " This is a test AI summary"
     
     def _add_visualization_slides(self, df):
         """Add chart visualization slides"""
