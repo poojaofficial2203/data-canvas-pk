@@ -456,10 +456,10 @@ class UniversalDataToPPT:
             paragraph.font.size = Pt(8)
 
     def _add_recommendations_slide(self):
-    slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
+       slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
 
-    title = slide.shapes.title
-    title.text = "Recommendations"
+       title = slide.shapes.title
+       title.text = "Recommendations"
 
     textbox = slide.shapes.add_textbox(
         Inches(0.5),
