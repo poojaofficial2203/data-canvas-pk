@@ -431,7 +431,7 @@ class UniversalDataToPPT:
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
             chart_img = self.chart_generator.histogram(
-                viz_df[numeric_cols[0]],
+              #  viz_df[numeric_cols[0]],
                 title="Histogram",
                 bins=20
             )
@@ -444,7 +444,7 @@ class UniversalDataToPPT:
             title.text = f"🏷️  Top Values: {categorical_cols[0]}"
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
-            top_vals = viz_df[categorical_cols[0]].value_counts().head(10)
+         #   top_vals = viz_df[categorical_cols[0]].value_counts().head(10)
             chart_img = self.chart_generator.bar_chart(
                 top_vals,
                 title="Bar Chart"
@@ -459,7 +459,7 @@ class UniversalDataToPPT:
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
             chart_img = self.chart_generator.scatter_plot(
-                viz_df,
+            #    viz_df,
                 numeric_cols[0],
                 numeric_cols[1],
                 title="Scatter Plot"
