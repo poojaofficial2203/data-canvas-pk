@@ -425,10 +425,26 @@ class UniversalDataToPPT:
         
     def _add_ai_insights_slide(self, insights):
         slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
+
+     # Background color
+        fill = slide.background.fill
+        fill.solid()
+        fill.fore_color.rgb = RGBColor(230, 240, 255)
+
         title = slide.shapes.title
         title.text = "AI Insights"
+
+    # Title color
+        title.text_frame.paragraphs[0].font.color.rgb = RGBColor(31, 78, 121)
+    
+        
         
         textbox = slide.shapes.add_textbox( Inches (0.1), Inches (1.2), Inches (9.6), Inches (5.8)) 
+
+        # Textbox color
+        textbox.fill.solid()
+        textbox.fill.fore_color.rgb = RGBColor(245, 250, 255)
+
         text_frame = textbox.text_frame
         text_frame.word_wrap = True 
         insights = insights.replace("###","")
