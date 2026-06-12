@@ -193,8 +193,8 @@ class UniversalDataToPPT:
      #   )
         
         print(f"✓ Presentation created from {self.data_format}: {output_file}")
-        print(f"  Processing time: {perf_summary['processing_metrics']['processing_time_seconds']}s")
-        print(f"  Rows/sec: {perf_summary['processing_metrics']['rows_processed_per_second']}")
+       # print(f"  Processing time: {perf_summary['processing_metrics']['processing_time_seconds']}s")
+       # print(f"  Rows/sec: {perf_summary['processing_metrics']['rows_processed_per_second']}")
         
         return True
     
