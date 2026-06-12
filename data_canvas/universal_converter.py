@@ -227,7 +227,10 @@ class UniversalDataToPPT:
         from data_canvas.ai_insights import generate_insights
         summary_text = str(df.describe())
         insights = generate_insights(summary_text)
-        self._add_ai_insights_slide(insights)
+        chunks = self._split_text(insights)
+
+        for chunk in chunks:
+            self._add_ai_insights_slide(chunk)
         self._add_visualization_slides(df)
     
     def _add_title_slide(self):
@@ -417,6 +420,9 @@ class UniversalDataToPPT:
                 p.space_before = Pt(10)
                 p.level = 0
 
+    def _split_text(self, text, size =800):
+        return [text[i:i+size] for i in range (0, len (text),size)]
+        
     def _add_ai_insights_slide(self, insights):
         slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
         title = slide.shapes.title
