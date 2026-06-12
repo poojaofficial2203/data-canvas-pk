@@ -424,7 +424,7 @@ class UniversalDataToPPT:
         
         textbox = slide.shapes.add_textbox( Inches (0.5), Inches (1.5), Inches (9.2), Inches (5)) 
         textbox.text_frame.text = insights
-        textbox.text_frame.pragraphs[0].font.size = Pt(10)
+        textbox.text_frame.paragraphs[0].font.size = Pt(10)
     
     def _add_visualization_slides(self, df):
         """Add chart visualization slides"""
