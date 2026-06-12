@@ -398,8 +398,8 @@ class UniversalDataToPPT:
                 (f"Std Dev", f"{stats['std_dev']:.2f}"),
                 (f"Min Value", f"{stats['min']:.2f}"),
                 (f"Max Value", f"{stats['max']:.2f}"),
-                (f"Q1 (25%)", f"{stats['q25']:.2f}"),
-                (f"Q3 (75%)", f"{stats['q75']:.2f}"),
+                (f"Q1 (25%)", f"{stats.get['q25', 0]:.2f}"),
+                (f"Q3 (75%)", f"{stats.get['q75', 0]:.2f}"),
             ]
             
             for i, (label, value) in enumerate(stats_display):
