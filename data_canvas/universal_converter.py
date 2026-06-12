@@ -430,13 +430,13 @@ class UniversalDataToPPT:
             title.text = f"📊 Distribution: {numeric_cols[0]}"
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
-            chart_img = self.chart_generator.histogram(
+           # chart_img = self.chart_generator.histogram(
               #  viz_df[numeric_cols[0]],
-                title="Histogram",
-                bins=20
-            )
+               # title="Histogram",
+              #  bins=20
+         #   )
             
-            self._add_image_to_slide(slide, chart_img)
+         #   self._add_image_to_slide(slide, chart_img)
         
         if categorical_cols:
             slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
@@ -445,12 +445,12 @@ class UniversalDataToPPT:
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
          #   top_vals = viz_df[categorical_cols[0]].value_counts().head(10)
-            chart_img = self.chart_generator.bar_chart(
-                top_vals,
-                title="Bar Chart"
-            )
+         #   chart_img = self.chart_generator.bar_chart(
+          #      top_vals,
+           #     title="Bar Chart"
+        #    )
             
-            self._add_image_to_slide(slide, chart_img)
+          #  self._add_image_to_slide(slide, chart_img)
         
         if len(numeric_cols) >= 2:
             slide = self.prs.slides.add_slide(self.prs.slide_layouts[5])
@@ -458,14 +458,14 @@ class UniversalDataToPPT:
             title.text = f"🔗 Relationship: {numeric_cols[0]} vs {numeric_cols[1]}"
             title.text_frame.paragraphs[0].font.size = Pt(36)
             
-            chart_img = self.chart_generator.scatter_plot(
+         #   chart_img = self.chart_generator.scatter_plot(
             #    viz_df,
-                numeric_cols[0],
-                numeric_cols[1],
-                title="Scatter Plot"
-            )
-            
-            self._add_image_to_slide(slide, chart_img)
+            #    numeric_cols[0],
+            #    numeric_cols[1],
+             #   title="Scatter Plot"
+         #   )
+           
+         #   self._add_image_to_slide(slide, chart_img)
     
     def _add_image_to_slide(self, slide, image, left=Inches(1), top=Inches(1.5)):
         """Add image to slide"""
