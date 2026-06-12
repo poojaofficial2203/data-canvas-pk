@@ -231,7 +231,7 @@ class UniversalDataToPPT:
 
         for chunk in chunks:
             self._add_ai_insights_slide(chunk)
-        self._add_visualization_slides(df)
+      #  self._add_visualization_slides(df)
     
     def _add_title_slide(self):
         """Add professional title slide"""
